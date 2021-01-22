@@ -23,3 +23,7 @@ GitHubにログインしレポジトリを作成します。
 
 GitHub Actions RunnnerをTerraformを使ってデプロイします。
 
+``` sh
+cd $DIR/terraform/github-actions
+```
+
