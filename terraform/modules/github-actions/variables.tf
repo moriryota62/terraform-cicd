@@ -15,19 +15,28 @@ variable "vpc_id" {
 }
 
 # module parameter
-variable "ec2_runner_config_command" {
-  description = "GitHub Runnerを設定するコマンド"
+variable "runner_download_commnad" {
+  description = "GitHub Actions Runnerのインストーラをダウンロードするコマンド(GitHubの画面に表示されるコマンド)"
   type        = string
 }
 
-variable "ec2_runner_name" {
-  description = "GitHubで表示されるrunnerの名前"
+variable "runner_targz_name" {
+  description = "GitHub Actions Runnerのインストーラファイル名"
   type        = string
 }
 
-variable "ec2_runner_tags" {
-  description = "runnerに付与するタグのリスト"
-  type        = list(string)
+variable "runner_config_commnad" {
+  description = "GitHub Actions Runnerをセットアップするコマンド(GitHubの画面に表示されるコマンド)"
+  type        = string
+}
+variable "runner_name" {
+  description = "GitHub Actions Runnerの登録名"
+  type        = string
+}
+variable "runner_workdir" {
+  description = "GitHub Actions Runnerのワークディレクトリ"
+  type        = string
+  default     = "_work"
 }
 
 variable "ec2_instance_type" {

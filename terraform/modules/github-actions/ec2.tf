@@ -4,13 +4,13 @@ locals {
 
 # Download runner
 mkdir actions-runner && cd actions-runner
-curl -O -L https://github.com/actions/runner/releases/download/v2.273.4/actions-runner-linux-x64-2.273.4.tar.gz
-tar xzf ./actions-runner-linux-x64-2.273.4.tar.gz
+${var.runner_download_commnad}
+tar xzf ./${var.runner_targz_name}
+rm ./${var.runner_targz_name}
 
 # setup runner
 chmod 777 -R /actions-runner
-su - ec2-user -c '/actions-runner/config.sh --url ${var.ec2_github_url} --token ${var.ec2_registration_token} --name ${var.ec2_runner_name} --work _work --labels ${join(",", var.ec2_runner_tags)}'
-su - ec2-user -c '/actions-runner/run.sh'
+su - ec2-user -c 'cd /actions-runner && ${var.runner_config_commnad} --name ${var.runner_name} --work ${var.runner_workdir}'
 /actions-runner/svc.sh install
 /actions-runner/svc.sh start
     SHELLSCRIPT
