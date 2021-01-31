@@ -13,6 +13,17 @@ chmod 777 -R /actions-runner
 su - ec2-user -c 'cd /actions-runner && ${var.runner_config_commnad} --name ${var.runner_name} --work ${var.runner_workdir}'
 /actions-runner/svc.sh install
 /actions-runner/svc.sh start
+
+# install node (for terraform setup)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm install node
+cat <<EOF >> /root/.bashrc
+export NVM_DIR="/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+EOF
+ln -s `which node` /usr/local/bin/node
     SHELLSCRIPT
 }
 
@@ -52,5 +63,6 @@ resource "aws_instance" "github_runner" {
   }
 
   key_name = var.ec2_key_name
+
 }
 
